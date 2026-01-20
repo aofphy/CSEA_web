@@ -1,17 +1,12 @@
 
 import { cn } from "@/lib/utils";
 
-const images = [
-  "/gallery/20604394_10154602575166513_103539804688226458_n-768x576.jpg",
-  "/gallery/20604507_10154602610866513_9043060053624615318_n-768x483.jpg",
-  "/gallery/20604563_10154602610456513_6200665106361909303_n-768x513.jpg",
-  "/gallery/20622094_10154602653436513_8209444658319555815_n-768x576.jpg",
-  "/gallery/20638297_10154603037186513_2434812010368585828_n-768x506.jpg",
-  "/gallery/20663604_10154602611516513_2054082576132574765_n-768x511.jpg",
-  "/gallery/38477-2-768x1024.jpg",
-  "/gallery/521797-1-2048x922.jpg",
-  "/gallery/ANSCSE-CONF.jpg",
-];
+const galleryImports = import.meta.glob('/src/assets/gallery/*.{jpg,jpeg,png,gif,webp}', {
+  eager: true,
+  import: 'default',
+});
+
+const images = Object.values(galleryImports) as string[];
 
 export function GalleryMarquee() {
   return (
