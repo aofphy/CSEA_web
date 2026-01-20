@@ -9,6 +9,7 @@ export interface NewsItem {
   description: string;
   date: string;
   category: string;
+  image?: string;
   isNew: boolean;
 }
 
@@ -26,6 +27,7 @@ export interface PublicationItem {
   description: string;
   url: string;
   tags: string[];
+  image?: string;
 }
 
 interface DataContextType {

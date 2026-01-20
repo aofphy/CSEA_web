@@ -33,28 +33,39 @@ export function PublicationsSection() {
 
         <div className="grid md:grid-cols-2 gap-6">
           {publications.map((journal) => (
-            <a key={journal.id} href={journal.url} target="_blank" rel="noreferrer" className="block">
-              <Card className="group hover:border-primary/50 transition-colors h-full">
-                <CardHeader>
-                  <div className="flex justify-between items-start gap-4">
-                      <CardTitle className="text-xl leading-tight group-hover:text-primary transition-colors">
-                          {journal.title}
-                      </CardTitle>
-                      <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+            <a key={journal.id} href={journal.url} target="_blank" rel="noreferrer" className="block h-full">
+              <Card className="group hover:border-primary/50 transition-colors h-full flex flex-col md:flex-row overflow-hidden">
+                {journal.image && (
+                  <div className="w-full md:w-1/3 aspect-video md:aspect-auto flex-shrink-0">
+                    <img 
+                      src={journal.image} 
+                      alt={journal.title} 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                  <div className="flex gap-2 mt-2">
-                      {journal.tags.map(tag => (
-                          <Badge key={tag} variant="secondary" className="text-xs font-normal">
-                              {tag}
-                          </Badge>
-                      ))}
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="line-clamp-3 text-sm text-muted-foreground prose prose-sm dark:prose-invert">
-                    <Markdown>{journal.description}</Markdown>
-                  </div>
-                </CardContent>
+                )}
+                <div className="flex-1">
+                  <CardHeader>
+                    <div className="flex justify-between items-start gap-4">
+                        <CardTitle className="text-xl leading-tight group-hover:text-primary transition-colors">
+                            {journal.title}
+                        </CardTitle>
+                        <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+                    </div>
+                    <div className="flex gap-2 mt-2">
+                        {journal.tags.map(tag => (
+                            <Badge key={tag} variant="secondary" className="text-xs font-normal">
+                                {tag}
+                            </Badge>
+                        ))}
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="line-clamp-3 text-sm text-muted-foreground prose prose-sm dark:prose-invert">
+                      <Markdown>{journal.description}</Markdown>
+                    </div>
+                  </CardContent>
+                </div>
               </Card>
             </a>
           ))}

@@ -24,6 +24,7 @@ export default function PublicationsManager() {
     description: "",
     url: "#",
     tags: [],
+    image: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -46,6 +47,7 @@ export default function PublicationsManager() {
         description: "",
         url: "#",
         tags: [],
+        image: "",
     });
     setTagsInput("");
   };
@@ -89,6 +91,15 @@ export default function PublicationsManager() {
                   value={formData.url}
                   onChange={(e) => setFormData({ ...formData, url: e.target.value })}
                   required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="image">Image URL (Optional)</Label>
+                <Input
+                  id="image"
+                  value={formData.image || ""}
+                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                  placeholder="https://..."
                 />
               </div>
               <div className="space-y-2">

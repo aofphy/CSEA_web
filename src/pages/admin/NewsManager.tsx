@@ -24,6 +24,7 @@ export default function NewsManager() {
     description: "",
     date: "",
     category: "News",
+    image: "",
     isNew: false,
   });
 
@@ -45,6 +46,7 @@ export default function NewsManager() {
       description: "",
       date: "",
       category: "News",
+      image: "",
       isNew: false,
     });
   };
@@ -107,6 +109,15 @@ export default function NewsManager() {
                   onCheckedChange={(checked) => setFormData({ ...formData, isNew: checked as boolean })}
                 />
                 <Label htmlFor="isNew">Mark as New</Label>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="image">Image URL (Optional)</Label>
+                <Input
+                  id="image"
+                  value={formData.image || ""}
+                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                  placeholder="https://..."
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="description">Description (Markdown supported)</Label>

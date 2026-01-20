@@ -22,8 +22,17 @@ export function NewsSection() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {news.map((item) => (
-            <Card key={item.id} className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-              <CardHeader className="pb-3">
+            <Card key={item.id} className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden flex flex-col">
+              {item.image && (
+                <div className="aspect-video w-full overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+              )}
+              <CardHeader className="pb-3 flex-shrink-0">
                 <div className="mb-2 flex items-center justify-between">
                   <Badge variant={item.category === "Conference" ? "default" : "secondary"} className="text-xs">
                     {item.category}

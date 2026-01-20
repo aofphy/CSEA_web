@@ -29,8 +29,20 @@ create table if not exists public.publications (
   title text not null,
   description text,
   url text,
-  tags text[]
+  tags text[],
+  image text
 );
+
+-- 3.1 Ensure image column exists (in case table was already created without it)
+do $$
+begin
+  if not exists (select 1 from information_schema.columns where table_name = 'news' and column_name = 'image') then
+    alter table public.news add column image text;
+  end if;
+  if not exists (select 1 from information_schema.columns where table_name = 'publications' and column_name = 'image') then
+    alter table public.publications add column image text;
+  end if;
+end $$;
 
 -- 4. Enable Row Level Security (RLS)
 alter table public.news enable row level security;
