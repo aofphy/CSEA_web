@@ -16,10 +16,6 @@ const images = [
 export function GalleryMarquee() {
   return (
     <div className="w-full overflow-hidden bg-background/50 backdrop-blur-sm py-10 border-y border-border/50">
-      <div className="container mx-auto px-4 mb-4">
-        <h2 className="text-2xl font-bold text-center mb-2">Our Activities Gallery</h2>
-        <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
-      </div>
       <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
         <div className="flex w-full overflow-hidden mask-linear-gradient">
             {/* First copy of images */}
