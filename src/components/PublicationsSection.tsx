@@ -36,36 +36,43 @@ export function PublicationsSection() {
             </Button>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {recentPublications.map((journal) => (
             <a key={journal.id} href={journal.url} target="_blank" rel="noreferrer" className="block h-full">
-              <Card className="group hover:border-primary/50 transition-colors h-full flex flex-col md:flex-row overflow-hidden">
-                {journal.image && (
-                  <div className="w-full md:w-1/3 aspect-video md:aspect-auto flex-shrink-0">
+              <Card className="group hover:border-primary/50 transition-all hover:shadow-md h-full flex flex-col overflow-hidden">
+                <div className="w-full aspect-[4/3] overflow-hidden bg-muted relative">
+                  {journal.image ? (
                     <img 
                       src={journal.image} 
                       alt={journal.title} 
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
-                  </div>
-                )}
-                <div className="flex-1">
-                  <CardHeader>
-                    <div className="flex justify-between items-start gap-4">
-                        <CardTitle className="text-xl leading-tight group-hover:text-primary transition-colors">
-                            {journal.title}
-                        </CardTitle>
-                        <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-muted-foreground/20">
+                      <BookOpen className="w-12 h-12" />
                     </div>
-                    <div className="flex gap-2 mt-2">
-                        {journal.tags.map(tag => (
-                            <Badge key={tag} variant="secondary" className="text-xs font-normal">
+                  )}
+                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="bg-background/80 backdrop-blur p-2 rounded-full shadow-sm">
+                      <ArrowUpRight className="w-4 h-4 text-primary" />
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex-1 flex flex-col">
+                  <CardHeader className="p-4 pb-2">
+                    <CardTitle className="text-lg leading-tight group-hover:text-primary transition-colors line-clamp-2">
+                            {journal.title}
+                    </CardTitle>
+                    <div className="flex flex-wrap gap-2 mt-3">
+                        {journal.tags.slice(0, 2).map(tag => (
+                            <Badge key={tag} variant="secondary" className="text-[10px] font-normal px-2 py-0 h-5">
                                 {tag}
                             </Badge>
                         ))}
                     </div>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="p-4 pt-2">
                     <div className="line-clamp-3 text-sm text-muted-foreground prose prose-sm dark:prose-invert">
                       <Markdown remarkPlugins={[remarkGfm]}>{journal.description}</Markdown>
                     </div>
