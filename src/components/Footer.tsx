@@ -1,4 +1,5 @@
-import { Mail, Phone, MapPin, Facebook, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, Globe, Lock } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function Footer() {
   return (
@@ -87,6 +88,13 @@ export function Footer() {
               >
                 <Facebook className="h-4 w-4" />
               </a>
+              <Link
+                to="/admin/login"
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-background/10 text-background/70 transition-colors hover:bg-background/20 hover:text-background"
+                title="Admin Login"
+              >
+                <Lock className="h-4 w-4" />
+              </Link>
             </div>
           </div>
         </div>

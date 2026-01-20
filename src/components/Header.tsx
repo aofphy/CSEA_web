@@ -18,6 +18,8 @@ const navItems = [
     label: "Conferences",
     href: "#conferences",
     children: [
+      { label: "ANSCSE", href: "https://www.facebook.com/ANSCSE" },
+      { label: "Thai summer School in Computational", href: "https://www.facebook.com/profile.php?id=61565925853669" },
       { label: "ANSCSE27", href: "#anscse27" },
       { label: "ANSCSE26", href: "#anscse26" },
       { label: "TS2C2", href: "#ts2c2" },
