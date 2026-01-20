@@ -18,11 +18,11 @@ const Index = () => {
       <main>
         <HeroSection />
         <NewsSection />
-        <AboutSection />
+        {/* AboutSection moved to /about */}
         <ActivitiesSection />
         <CommitteeSection />
         <PartnersSection />
-        <MembershipBenefits />
+        {/* MembershipBenefits moved to /membership */}
         {/* <MembersSection /> - Hiding redundant members section since we have committee section now */}
         <HallOfFameSection />
         <PublicationsSection />

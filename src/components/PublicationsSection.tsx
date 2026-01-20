@@ -10,9 +10,12 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useData } from "@/context/DataContext";
 import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Link } from "react-router-dom";
 
 export function PublicationsSection() {
   const { publications } = useData();
+  const recentPublications = publications.slice(0, 4);
 
   return (
     <section className="py-20">
@@ -26,13 +29,15 @@ export function PublicationsSection() {
                     Supported journals and publication outlets for our community.
                 </p>
             </div>
-            <Button variant="outline" className="gap-2">
-                View All Publications <BookOpen className="w-4 h-4"/>
+            <Button variant="outline" className="gap-2" asChild>
+                <Link to="/publications">
+                    View All Publications <BookOpen className="w-4 h-4"/>
+                </Link>
             </Button>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {publications.map((journal) => (
+          {recentPublications.map((journal) => (
             <a key={journal.id} href={journal.url} target="_blank" rel="noreferrer" className="block h-full">
               <Card className="group hover:border-primary/50 transition-colors h-full flex flex-col md:flex-row overflow-hidden">
                 {journal.image && (
@@ -62,7 +67,7 @@ export function PublicationsSection() {
                   </CardHeader>
                   <CardContent>
                     <div className="line-clamp-3 text-sm text-muted-foreground prose prose-sm dark:prose-invert">
-                      <Markdown>{journal.description}</Markdown>
+                      <Markdown remarkPlugins={[remarkGfm]}>{journal.description}</Markdown>
                     </div>
                   </CardContent>
                 </div>

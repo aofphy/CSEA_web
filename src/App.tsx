@@ -6,6 +6,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/context/AuthContext";
 import { DataProvider } from "@/context/DataContext";
 import Index from "./pages/Index";
+import NewsPage from "./pages/NewsPage";
+import NewsDetail from "./pages/NewsDetail";
+import AboutPage from "./pages/AboutPage";
+import MembershipPage from "./pages/MembershipPage";
+import HallOfFamePage from "./pages/HallOfFamePage";
+import PublicationsPage from "./pages/PublicationsPage";
 import NotFound from "./pages/NotFound";
 import { AdminLayout } from "./components/admin/AdminLayout";
 import AdminLogin from "./pages/admin/Login";
@@ -27,6 +33,12 @@ const App = () => (
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<Index />} />
+              <Route path="/news" element={<NewsPage />} />
+              <Route path="/news/:id" element={<NewsDetail />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/membership" element={<MembershipPage />} />
+              <Route path="/hall-of-fame" element={<HallOfFamePage />} />
+              <Route path="/publications" element={<PublicationsPage />} />
               
               {/* Admin Routes */}
               <Route path="/admin/login" element={<AdminLogin />} />

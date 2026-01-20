@@ -2,11 +2,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { useData } from "@/context/DataContext";
 import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export function NewsSection() {
   const { news } = useData();
+  const recentNews = news.slice(0, 4);
 
   return (
     <section id="news" className="bg-muted/50 py-20">
@@ -21,8 +24,9 @@ export function NewsSection() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {news.map((item) => (
-            <Card key={item.id} className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden flex flex-col">
+          {recentNews.map((item) => (
+            <Link key={item.id} to={`/news/${item.id}`} className="block h-full">
+              <Card className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden flex flex-col h-full">
               {item.image && (
                 <div className="aspect-video w-full overflow-hidden">
                   <img
@@ -45,23 +49,26 @@ export function NewsSection() {
                   {item.title}
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="flex-grow">
                 <div className="item-description mb-4 line-clamp-3 text-sm text-muted-foreground prose prose-sm dark:prose-invert">
-                  <Markdown>{item.description}</Markdown>
+                  <Markdown remarkPlugins={[remarkGfm]}>{item.description}</Markdown>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mt-auto">
                   <CalendarDays className="h-4 w-4" />
                   <span>{item.date}</span>
                 </div>
               </CardContent>
-            </Card>
+              </Card>
+            </Link>
           ))}
         </div>
 
         <div className="mt-10 text-center">
-          <Button variant="outline" className="gap-2">
-            View All News
-            <ArrowRight className="h-4 w-4" />
+          <Button variant="outline" className="gap-2" asChild>
+            <Link to="/news">
+              View All News
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </Button>
         </div>
       </div>
