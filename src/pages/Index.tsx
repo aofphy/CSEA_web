@@ -7,6 +7,7 @@ import { MembersSection } from "@/components/MembersSection";
 import { PartnersSection } from "@/components/PartnersSection";
 import { HallOfFameSection } from "@/components/HallOfFameSection";
 import { PublicationsSection } from "@/components/PublicationsSection";
+import { CommitteeSection } from "@/components/CommitteeSection";
 import { Footer } from "@/components/Footer";
 
 const Index = () => {
@@ -17,9 +18,10 @@ const Index = () => {
         <HeroSection />
         <NewsSection />
         <AboutSection />
+        <CommitteeSection />
         <PartnersSection />
         <MembershipBenefits />
-        <MembersSection />
+        {/* <MembersSection /> - Hiding redundant members section since we have committee section now */}
         <HallOfFameSection />
         <PublicationsSection />
       </main>
@@ -27,6 +29,7 @@ const Index = () => {
     </div>
   );
 };
+
 
 
 export default Index;
