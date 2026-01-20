@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
+import { toast } from "sonner";
 
 // Types
 export interface NewsItem {
@@ -28,155 +30,216 @@ export interface PublicationItem {
 
 interface DataContextType {
   news: NewsItem[];
-  partners: any[]; // Assuming partners are static for now or similar structure
+  partners: any[]; 
   hallOfFame: HallOfFameItem[];
   publications: PublicationItem[];
-  addNews: (item: Omit<NewsItem, "id">) => void;
-  updateNews: (item: NewsItem) => void;
-  deleteNews: (id: number) => void;
-  addHallOfFame: (item: Omit<HallOfFameItem, "id">) => void;
-  updateHallOfFame: (item: HallOfFameItem) => void;
-  deleteHallOfFame: (id: number) => void;
-  addPublication: (item: Omit<PublicationItem, "id">) => void;
-  updatePublication: (item: PublicationItem) => void;
-  deletePublication: (id: number) => void;
+  addNews: (item: Omit<NewsItem, "id">) => Promise<void>;
+  updateNews: (item: NewsItem) => Promise<void>;
+  deleteNews: (id: number) => Promise<void>;
+  addHallOfFame: (item: Omit<HallOfFameItem, "id">) => Promise<void>;
+  updateHallOfFame: (item: HallOfFameItem) => Promise<void>;
+  deleteHallOfFame: (id: number) => Promise<void>;
+  addPublication: (item: Omit<PublicationItem, "id">) => Promise<void>;
+  updatePublication: (item: PublicationItem) => Promise<void>;
+  deletePublication: (id: number) => Promise<void>;
+  isLoading: boolean;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
-// Initial Data
-const initialNews: NewsItem[] = [
-  {
-    id: 1,
-    title: "ANSCSE27: Faculty of Engineering, Chulalongkorn University",
-    description: "We are delighted to extend an invitation for you to participate in the 27th International Annual Symposium on Computational Science and Engineering (ANSCSE27).",
-    date: "2024",
-    category: "Conference",
-    isNew: true,
-  },
-  {
-    id: 2,
-    title: "ANSCSE26: Special issue Bangmod J-MCS",
-    description: "Special issue including selected papers presented to ANSCSE26. Participants are invited to submit their contributions to Bangmod J-MCS.",
-    date: "มีนาคม 2023",
-    category: "Publication",
-    isNew: false,
-  },
-  {
-    id: 3,
-    title: "CSEA Pioneer Award 2023: Prof. Dr. Supot Hannongbua",
-    description: "Professor Dr. Supot HANNONGBUA is a renowned computational chemist and materials scientist in Thailand with over 205 publications.",
-    date: "2023",
-    category: "Award",
-    isNew: false,
-  },
-  {
-    id: 4,
-    title: "ประกาศรายชื่อสมาชิกประเภทบุคคล ประจำปี 2566",
-    description: "รายชื่อสมาชิกที่ได้รับการอนุมัติจากคณะกรรมการบริหารสมาคม ประจำปี 2566 จำนวน 20 ท่าน",
-    date: "2023",
-    category: "Announcement",
-    isNew: false,
-  },
-];
-
-const initialHallOfFame: HallOfFameItem[] = [
-  {
-    id: 1,
-    name: "Prof. Dr. Supot Hannongbua",
-    role: "CSEA Pioneer Award 2023",
-    description: "For his outstanding contribution to computational chemistry in Thailand.",
-    image: "/placeholder.svg"
-  },
-  {
-    id: 2,
-    name: "Prof. Dr. Vudhichai Parasuk",
-    role: "CSEA Pioneer Award 2023",
-    description: "For his dedication to advancing computational science education.",
-    image: "/placeholder.svg"
-  },
-];
-
-const initialPublications: PublicationItem[] = [
-  {
-    id: 1,
-    title: "Bangmod Journal of Mathematics and Computational Science (Bangmod J-MCS)",
-    description:
-      "A peer-reviewed journal publishing original research in mathematics and computational science. Special issues often feature selected papers from ANSCSE.",
-    url: "#",
-    tags: ["Mathematics", "Computational Science"],
-  },
-  {
-    id: 2,
-    title: "Computational Science and Engineering Journal",
-    description:
-      "Focuses on advanced computational methods and their applications in engineering and science projects.",
-    url: "#",
-    tags: ["Engineering", "Simulation"],
-  },
-];
-
 export function DataProvider({ children }: { children: React.ReactNode }) {
-  // Load from LocalStorage if available, else use initial
-  const [news, setNews] = useState<NewsItem[]>(() => {
-    const saved = localStorage.getItem("csea_news");
-    return saved ? JSON.parse(saved) : initialNews;
-  });
+  const [news, setNews] = useState<NewsItem[]>([]);
+  const [hallOfFame, setHallOfFame] = useState<HallOfFameItem[]>([]);
+  const [publications, setPublications] = useState<PublicationItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [hallOfFame, setHallOfFame] = useState<HallOfFameItem[]>(() => {
-    const saved = localStorage.getItem("csea_hall_of_fame");
-    return saved ? JSON.parse(saved) : initialHallOfFame;
-  });
+  // Fetch Data from Supabase
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      if (!import.meta.env.VITE_SUPABASE_URL) {
+        console.warn("Supabase URL not set, skipping fetch");
+        setIsLoading(false);
+        return;
+      }
 
-  const [publications, setPublications] = useState<PublicationItem[]>(() => {
-    const saved = localStorage.getItem("csea_publications");
-    return saved ? JSON.parse(saved) : initialPublications;
-  });
+      // Fetch News
+      const { data: newsData, error: newsError } = await supabase
+        .from("news")
+        .select("*")
+        .order("created_at", { ascending: false });
+      
+      if (newsError) throw newsError;
+      if (newsData) {
+        setNews(newsData.map((item: any) => ({
+          ...item,
+          isNew: item.is_new // Map snake_case to camelCase
+        })));
+      }
 
-  // Persist to LocalStorage
-  useEffect(() => localStorage.setItem("csea_news", JSON.stringify(news)), [news]);
-  useEffect(() => localStorage.setItem("csea_hall_of_fame", JSON.stringify(hallOfFame)), [hallOfFame]);
-  useEffect(() => localStorage.setItem("csea_publications", JSON.stringify(publications)), [publications]);
+      // Fetch Hall of Fame
+      const { data: hofData, error: hofError } = await supabase
+        .from("hall_of_fame")
+        .select("*")
+        .order("created_at", { ascending: false });
+      
+      if (hofError) throw hofError;
+      if (hofData) setHallOfFame(hofData);
 
-  const addNews = (item: Omit<NewsItem, "id">) => {
-    setNews(prev => [...prev, { ...item, id: Date.now() }]);
+      // Fetch Publications
+      const { data: pubData, error: pubError } = await supabase
+        .from("publications")
+        .select("*")
+        .order("created_at", { ascending: false });
+      
+      if (pubError) throw pubError;
+      if (pubData) setPublications(pubData);
+
+    } catch (error: any) {
+      console.error("Error fetching data:", error);
+      // Fallback to empty or initial data if needed, simplified here
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const updateNews = (item: NewsItem) => {
-    setNews(prev => prev.map(i => i.id === item.id ? item : i));
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // --- Actions ---
+
+  const addNews = async (item: Omit<NewsItem, "id">) => {
+    const { error } = await supabase.from("news").insert([{
+      title: item.title,
+      description: item.description,
+      date: item.date,
+      category: item.category,
+      is_new: item.isNew
+    }]);
+
+    if (error) {
+      toast.error("Failed to add news: " + error.message);
+    } else {
+      toast.success("News added successfully");
+      fetchData();
+    }
   };
 
-  const deleteNews = (id: number) => {
-    setNews(prev => prev.filter(i => i.id !== id));
+  const updateNews = async (item: NewsItem) => {
+    const { error } = await supabase.from("news").update({
+      title: item.title,
+      description: item.description,
+      date: item.date,
+      category: item.category,
+      is_new: item.isNew
+    }).eq('id', item.id);
+
+    if (error) {
+      toast.error("Failed to update news: " + error.message);
+    } else {
+      toast.success("News updated successfully");
+      fetchData();
+    }
   };
 
-  const addHallOfFame = (item: Omit<HallOfFameItem, "id">) => {
-    setHallOfFame(prev => [...prev, { ...item, id: Date.now() }]);
+  const deleteNews = async (id: number) => {
+    const { error } = await supabase.from("news").delete().eq('id', id);
+    if (error) {
+      toast.error("Failed to delete news: " + error.message);
+    } else {
+      toast.success("News deleted successfully");
+      fetchData();
+    }
   };
 
-  const updateHallOfFame = (item: HallOfFameItem) => {
-    setHallOfFame(prev => prev.map(i => i.id === item.id ? item : i));
+  const addHallOfFame = async (item: Omit<HallOfFameItem, "id">) => {
+    const { error } = await supabase.from("hall_of_fame").insert([{
+      name: item.name,
+      role: item.role,
+      description: item.description,
+      image: item.image
+    }]);
+
+    if (error) {
+      toast.error("Failed to add entry: " + error.message);
+    } else {
+      toast.success("Entry added successfully");
+      fetchData();
+    }
   };
 
-  const deleteHallOfFame = (id: number) => {
-    setHallOfFame(prev => prev.filter(i => i.id !== id));
+  const updateHallOfFame = async (item: HallOfFameItem) => {
+    const { error } = await supabase.from("hall_of_fame").update({
+      name: item.name,
+      role: item.role,
+      description: item.description,
+      image: item.image
+    }).eq("id", item.id);
+
+    if (error) {
+      toast.error("Failed to update entry: " + error.message);
+    } else {
+      toast.success("Entry updated successfully");
+      fetchData();
+    }
   };
 
-  const addPublication = (item: Omit<PublicationItem, "id">) => {
-    setPublications(prev => [...prev, { ...item, id: Date.now() }]);
+  const deleteHallOfFame = async (id: number) => {
+    const { error } = await supabase.from("hall_of_fame").delete().eq("id", id);
+    if (error) {
+      toast.error("Failed to delete entry: " + error.message);
+    } else {
+      toast.success("Entry deleted successfully");
+      fetchData();
+    }
   };
 
-  const updatePublication = (item: PublicationItem) => {
-    setPublications(prev => prev.map(i => i.id === item.id ? item : i));
+  const addPublication = async (item: Omit<PublicationItem, "id">) => {
+    const { error } = await supabase.from("publications").insert([{
+      title: item.title,
+      description: item.description,
+      url: item.url,
+      tags: item.tags
+    }]);
+
+    if (error) {
+      toast.error("Failed to add publication: " + error.message);
+    } else {
+      toast.success("Publication added successfully");
+      fetchData();
+    }
   };
 
-  const deletePublication = (id: number) => {
-    setPublications(prev => prev.filter(i => i.id !== id));
+  const updatePublication = async (item: PublicationItem) => {
+    const { error } = await supabase.from("publications").update({
+      title: item.title,
+      description: item.description,
+      url: item.url,
+      tags: item.tags
+    }).eq("id", item.id);
+
+    if (error) {
+      toast.error("Failed to update publication: " + error.message);
+    } else {
+      toast.success("Publication updated successfully");
+      fetchData();
+    }
+  };
+
+  const deletePublication = async (id: number) => {
+    const { error } = await supabase.from("publications").delete().eq("id", id);
+    if (error) {
+      toast.error("Failed to delete publication: " + error.message);
+    } else {
+      toast.success("Publication deleted successfully");
+      fetchData();
+    }
   };
 
   return (
     <DataContext.Provider value={{
-      news, partners: [], hallOfFame, publications,
+      news, partners: [], hallOfFame, publications, isLoading,
       addNews, updateNews, deleteNews,
       addHallOfFame, updateHallOfFame, deleteHallOfFame,
       addPublication, updatePublication, deletePublication
@@ -193,3 +256,4 @@ export const useData = () => {
   }
   return context;
 };
+
