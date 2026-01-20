@@ -19,6 +19,7 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import NewsManager from "./pages/admin/NewsManager";
 import HallOfFameManager from "./pages/admin/HallOfFameManager";
 import PublicationsManager from "./pages/admin/PublicationsManager";
+import DynamicBackground from "./components/DynamicBackground";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
       <AuthProvider>
         <DataProvider>
           <BrowserRouter>
+            <DynamicBackground />
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<Index />} />

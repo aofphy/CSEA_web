@@ -12,7 +12,7 @@ export default function NewsPage() {
   const { news } = useData();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-transparent">
       <Header />
       <main className="container mx-auto px-4 py-20">
         <h1 className="mb-8 text-4xl font-bold">News & Events</h1>

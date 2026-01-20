@@ -4,7 +4,7 @@ import { AboutSection } from "@/components/AboutSection";
 
 const AboutPage = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-transparent">
       <Header />
       <main>
         <AboutSection />

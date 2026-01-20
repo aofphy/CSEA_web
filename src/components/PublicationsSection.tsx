@@ -46,6 +46,11 @@ export function PublicationsSection() {
                       src={journal.image} 
                       alt={journal.title} 
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        e.currentTarget.src = "/placeholder.svg"; // Fallback if image fails
+                        e.currentTarget.classList.add("opacity-50");
+                      }}
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-muted-foreground/20">

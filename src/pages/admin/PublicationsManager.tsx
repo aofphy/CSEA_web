@@ -176,8 +176,18 @@ export default function PublicationsManager() {
           <div className="grid gap-4">
             {publications.map((item) => (
               <SortableItem key={item.id} id={item.id} className="bg-card rounded-lg border p-2">
-                <div className="flex justify-between items-start w-full">
-                  <div>
+                <div className="flex gap-4 items-start w-full">
+                   {item.image && (
+                      <div className="w-16 h-12 bg-muted rounded overflow-hidden shrink-0 mt-1">
+                        <img 
+                          src={item.image} 
+                          alt={item.title} 
+                          className="w-full h-full object-cover" 
+                          referrerPolicy="no-referrer"
+                        />
+                      </div>
+                   )}
+                  <div className="flex-1">
                     <h3 className="font-semibold text-lg">{item.title}</h3>
                     <div className="flex flex-wrap gap-2 my-2">
                         {item.tags.map(tag => (

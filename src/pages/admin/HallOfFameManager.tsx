@@ -163,7 +163,12 @@ export default function HallOfFameManager() {
               <SortableItem key={item.id} id={item.id} className="bg-card rounded-lg border p-2">
                 <div className="flex gap-4 items-start w-full">
                   <div className="w-16 h-16 bg-muted rounded-full overflow-hidden shrink-0 mt-1">
-                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                      <img 
+                        src={item.image} 
+                        alt={item.name} 
+                        className="w-full h-full object-cover" 
+                        referrerPolicy="no-referrer"
+                      />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-lg">{item.name}</h3>

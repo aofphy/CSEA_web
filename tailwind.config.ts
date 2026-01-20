@@ -79,11 +79,31 @@ export default {
   				to: {
   					height: '0'
   				}
-  			}
+  			},
+			blob: {
+				"0%": {
+					transform: "translate(0px, 0px) scale(1)",
+				},
+				"33%": {
+					transform: "translate(30px, -50px) scale(1.1)",
+				},
+				"66%": {
+					transform: "translate(-20px, 20px) scale(0.9)",
+				},
+				"100%": {
+					transform: "translate(0px, 0px) scale(1)",
+				},
+			},
+			marquee: {
+				from: { transform: "translateX(0)" },
+				to: { transform: "translateX(calc(-100% - 1rem))" },
+			},
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+			blob: "blob 7s infinite",
+			marquee: "marquee 50s linear infinite",
   		},
   		boxShadow: {
   			'2xs': 'var(--shadow-2xs)',

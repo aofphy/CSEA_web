@@ -24,7 +24,7 @@ export default function NewsDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-transparent">
       <Header />
       <main className="container mx-auto px-4 py-20 max-w-4xl">
         <Button variant="ghost" className="mb-6 gap-2" asChild>

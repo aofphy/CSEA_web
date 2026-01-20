@@ -4,7 +4,7 @@ import { MembershipBenefits } from "@/components/MembershipBenefits";
 
 const MembershipPage = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-transparent">
       <Header />
       <main>
         <MembershipBenefits />

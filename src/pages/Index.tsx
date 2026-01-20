@@ -10,13 +10,15 @@ import { HallOfFameSection } from "@/components/HallOfFameSection";
 import { PublicationsSection } from "@/components/PublicationsSection";
 import { CommitteeSection } from "@/components/CommitteeSection";
 import { Footer } from "@/components/Footer";
+import { GalleryMarquee } from "@/components/GalleryMarquee";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-transparent">
       <Header />
       <main>
         <HeroSection />
+        <GalleryMarquee />
         <NewsSection />
         {/* AboutSection moved to /about */}
         <ActivitiesSection />

@@ -11,7 +11,7 @@ export default function PublicationsPage() {
   const { publications } = useData();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-transparent">
       <Header />
       <main className="container mx-auto px-4 py-20">
         <h1 className="mb-4 text-4xl font-bold">Publications & Journals</h1>
@@ -29,6 +29,10 @@ export default function PublicationsPage() {
                       src={journal.image} 
                       alt={journal.title} 
                       className="w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'; // Hide if fails in list view to maintain layout
+                      }}
                     />
                   </div>
                 )}
