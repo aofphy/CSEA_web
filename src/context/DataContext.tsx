@@ -11,6 +11,7 @@ export interface NewsItem {
   category: string;
   image?: string;
   isNew: boolean;
+  order_index?: number;
 }
 
 export interface HallOfFameItem {
@@ -19,6 +20,7 @@ export interface HallOfFameItem {
   role: string;
   description: string;
   image: string;
+  order_index?: number;
 }
 
 export interface PublicationItem {
@@ -28,6 +30,7 @@ export interface PublicationItem {
   url: string;
   tags: string[];
   image?: string;
+  order_index?: number;
 }
 
 interface DataContextType {
@@ -44,6 +47,7 @@ interface DataContextType {
   addPublication: (item: Omit<PublicationItem, "id">) => Promise<void>;
   updatePublication: (item: PublicationItem) => Promise<void>;
   deletePublication: (id: number) => Promise<void>;
+  reorderItems: (type: 'news' | 'hall_of_fame' | 'publications', items: any[]) => Promise<void>;
   isLoading: boolean;
 }
 
@@ -69,6 +73,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       const { data: newsData, error: newsError } = await supabase
         .from("news")
         .select("*")
+        .order("order_index", { ascending: true })
         .order("created_at", { ascending: false });
       
       if (newsError) throw newsError;
@@ -83,6 +88,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       const { data: hofData, error: hofError } = await supabase
         .from("hall_of_fame")
         .select("*")
+        .order("order_index", { ascending: true })
         .order("created_at", { ascending: false });
       
       if (hofError) throw hofError;
@@ -92,6 +98,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       const { data: pubData, error: pubError } = await supabase
         .from("publications")
         .select("*")
+        .order("order_index", { ascending: true })
         .order("created_at", { ascending: false });
       
       if (pubError) throw pubError;
@@ -239,12 +246,36 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const reorderItems = async (type: 'news' | 'hall_of_fame' | 'publications', items: any[]) => {
+    // Optimistic update
+    if (type === 'news') setNews(items);
+    if (type === 'hall_of_fame') setHallOfFame(items);
+    if (type === 'publications') setPublications(items);
+
+    const updates = items.map((item, index) => ({
+        id: item.id,
+        order_index: index,
+    }));
+
+    try {
+        const promises = updates.map(update => 
+            supabase.from(type).update({ order_index: update.order_index }).eq('id', update.id)
+        );
+        await Promise.all(promises);
+        toast.success("Order updated successfully");
+    } catch (error: any) {
+        toast.error("Failed to reorder: " + error.message);
+        fetchData(); // Revert
+    }
+  };
+
   return (
     <DataContext.Provider value={{
       news, partners: [], hallOfFame, publications, isLoading,
       addNews, updateNews, deleteNews,
       addHallOfFame, updateHallOfFame, deleteHallOfFame,
-      addPublication, updatePublication, deletePublication
+      addPublication, updatePublication, deletePublication,
+      reorderItems,
     }}>
       {children}
     </DataContext.Provider>

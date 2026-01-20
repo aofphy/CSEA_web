@@ -6,9 +6,9 @@ export default function AdminDashboard() {
   const { news, hallOfFame, publications } = useData();
 
   const stats = [
-    { label: "Total News Items", value: news.length, icon: Newspaper },
-    { label: "Hall of Fame Entries", value: hallOfFame.length, icon: Trophy },
-    { label: "Published Journals", value: publications.length, icon: BookOpen },
+    { label: "News & Events", value: news.length, icon: Newspaper },
+    { label: "Hall of Fame", value: hallOfFame.length, icon: Trophy },
+    { label: "Publications & Journals", value: publications.length, icon: BookOpen },
   ];
 
   return (

@@ -15,7 +15,7 @@ export function AdminLayout() {
     { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
     { href: "/admin/news", label: "News & Events", icon: Newspaper },
     { href: "/admin/hall-of-fame", label: "Hall of Fame", icon: Trophy },
-    { href: "/admin/publications", label: "Publications", icon: BookOpen },
+    { href: "/admin/publications", label: "Publications & Journals", icon: BookOpen },
   ];
 
   return (

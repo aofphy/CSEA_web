@@ -13,11 +13,46 @@ import {
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Trash2, Edit, Plus } from "lucide-react";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { SortableItem } from '@/components/admin/SortableItem';
 
 export default function NewsManager() {
-  const { news, addNews, updateNews, deleteNews } = useData();
+  const { news, addNews, updateNews, deleteNews, reorderItems } = useData();
   const [isOpen, setIsOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<NewsItem | null>(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = news.findIndex((item) => item.id === active.id);
+      const newIndex = news.findIndex((item) => item.id === over.id);
+      
+      const newItems = arrayMove(news, oldIndex, newIndex);
+      reorderItems('news', newItems);
+    }
+  };
 
   const [formData, setFormData] = useState<Partial<NewsItem>>({
     title: "",
@@ -138,31 +173,44 @@ export default function NewsManager() {
         </Dialog>
       </div>
 
-      <div className="grid gap-4">
-        {news.map((item) => (
-          <div key={item.id} className="bg-card p-4 rounded-lg border flex justify-between items-start">
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-sm font-medium text-muted-foreground px-2 py-0.5 bg-muted rounded">
-                    {item.category}
-                </span>
-                {item.isNew && <span className="text-xs text-primary font-bold">NEW</span>}
-                <span className="text-sm text-muted-foreground">• {item.date}</span>
-              </div>
-              <h3 className="font-semibold text-lg">{item.title}</h3>
-              <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
-            </div>
-            <div className="flex gap-2">
-              <Button variant="ghost" size="icon" onClick={() => handleEdit(item)}>
-                <Edit className="w-4 h-4" />
-              </Button>
-              <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive" onClick={() => deleteNews(item.id)}>
-                <Trash2 className="w-4 h-4" />
-              </Button>
-            </div>
+      <DndContext 
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <SortableContext 
+          items={news.map(item => item.id)}
+          strategy={verticalListSortingStrategy}
+        >
+          <div className="grid gap-4">
+            {news.map((item) => (
+              <SortableItem key={item.id} id={item.id} className="bg-card rounded-lg border p-2">
+                <div className="flex justify-between items-start w-full">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-sm font-medium text-muted-foreground px-2 py-0.5 bg-muted rounded">
+                          {item.category}
+                      </span>
+                      {item.isNew && <span className="text-xs text-primary font-bold">NEW</span>}
+                      <span className="text-sm text-muted-foreground">• {item.date}</span>
+                    </div>
+                    <h3 className="font-semibold text-lg">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button variant="ghost" size="icon" onClick={() => handleEdit(item)}>
+                      <Edit className="w-4 h-4" />
+                    </Button>
+                    <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive" onClick={() => deleteNews(item.id)}>
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              </SortableItem>
+            ))}
           </div>
-        ))}
-      </div>
+        </SortableContext>
+      </DndContext>
     </div>
   );
 }

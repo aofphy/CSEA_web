@@ -12,12 +12,47 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Trash2, Edit, Plus } from "lucide-react";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { SortableItem } from '@/components/admin/SortableItem';
 
 export default function PublicationsManager() {
-  const { publications, addPublication, updatePublication, deletePublication } = useData();
+  const { publications, addPublication, updatePublication, deletePublication, reorderItems } = useData();
   const [isOpen, setIsOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<PublicationItem | null>(null);
   const [tagsInput, setTagsInput] = useState("");
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = publications.findIndex((item) => item.id === active.id);
+      const newIndex = publications.findIndex((item) => item.id === over.id);
+      
+      const newItems = arrayMove(publications, oldIndex, newIndex);
+      reorderItems('publications', newItems);
+    }
+  };
 
   const [formData, setFormData] = useState<Partial<PublicationItem>>({
     title: "",
@@ -129,29 +164,42 @@ export default function PublicationsManager() {
         </Dialog>
       </div>
 
-      <div className="grid gap-4">
-        {publications.map((item) => (
-          <div key={item.id} className="bg-card p-4 rounded-lg border flex justify-between items-start">
-            <div>
-              <h3 className="font-semibold text-lg">{item.title}</h3>
-              <div className="flex flex-wrap gap-2 my-2">
-                  {item.tags.map(tag => (
-                      <span key={tag} className="text-xs bg-secondary text-secondary-foreground px-2 py-0.5 rounded-full">{tag}</span>
-                  ))}
-              </div>
-              <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
-            </div>
-            <div className="flex gap-2">
-              <Button variant="ghost" size="icon" onClick={() => handleEdit(item)}>
-                <Edit className="w-4 h-4" />
-              </Button>
-              <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive" onClick={() => deletePublication(item.id)}>
-                <Trash2 className="w-4 h-4" />
-              </Button>
-            </div>
+      <DndContext 
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <SortableContext 
+          items={publications.map(item => item.id)}
+          strategy={verticalListSortingStrategy}
+        >
+          <div className="grid gap-4">
+            {publications.map((item) => (
+              <SortableItem key={item.id} id={item.id} className="bg-card rounded-lg border p-2">
+                <div className="flex justify-between items-start w-full">
+                  <div>
+                    <h3 className="font-semibold text-lg">{item.title}</h3>
+                    <div className="flex flex-wrap gap-2 my-2">
+                        {item.tags.map(tag => (
+                            <span key={tag} className="text-xs bg-secondary text-secondary-foreground px-2 py-0.5 rounded-full">{tag}</span>
+                        ))}
+                    </div>
+                    <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button variant="ghost" size="icon" onClick={() => handleEdit(item)}>
+                      <Edit className="w-4 h-4" />
+                    </Button>
+                    <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive" onClick={() => deletePublication(item.id)}>
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+               </div>
+              </SortableItem> 
+            ))}
           </div>
-        ))}
-      </div>
+        </SortableContext>
+      </DndContext>
     </div>
   );
 }
