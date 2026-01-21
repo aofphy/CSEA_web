@@ -12,13 +12,18 @@ export default function AdminLogin() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (login(password)) {
-      toast.success("Welcome back!");
-      navigate("/admin");
-    } else {
-      toast.error("Invalid password");
+    try {
+      const success = await login(password);
+      if (success) {
+        toast.success("Welcome back!");
+        navigate("/admin");
+      } else {
+        toast.error("Invalid password or account setup issue");
+      }
+    } catch (error) {
+      toast.error("An error occurred during login");
     }
   };
 
