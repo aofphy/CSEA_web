@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Facebook, Globe, Lock, MessageCircle } from "lucide-react";
+import { Phone, MapPin, Facebook, Lock, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function Footer() {
@@ -34,9 +34,9 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#committee" className="text-background/70 transition-colors hover:text-background">
+                <Link to="/committee" className="text-background/70 transition-colors hover:text-background">
                   Committee
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#conferences" className="text-background/70 transition-colors hover:text-background">
@@ -73,36 +73,26 @@ export function Footer() {
                   02-564-6900 ต่อ 2629
                 </a>
               </li>
-              <li className="flex items-center gap-3">
-                <Mail className="h-4 w-4 text-background/70" />
-                <a href="mailto:info@cseathai.org" className="text-background/70 transition-colors hover:text-background">
-                  info@cseathai.org
-                </a>
-              </li>
-              <li className="flex items-center gap-3">
-                <Globe className="h-4 w-4 text-background/70" />
-                <a href="https://cseathai.org" target="_blank" rel="noopener noreferrer" className="text-background/70 transition-colors hover:text-background">
-                  cseathai.org
-                </a>
-              </li>
             </ul>
 
+            {/* LINE - prominent CTA */}
+            <a
+              href="https://lin.ee/QwupO6n"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 flex items-center gap-3 rounded-lg bg-[#06C755] px-4 py-3 text-white shadow-sm transition-transform hover:scale-[1.02]"
+            >
+              <MessageCircle className="h-5 w-5 shrink-0" />
+              <span className="text-sm font-semibold">เพิ่มเพื่อน LINE Official: CSEA Thailand</span>
+            </a>
+
             {/* Social */}
-            <div className="mt-6 flex gap-3">
+            <div className="mt-4 flex gap-3">
               <a
                 href="#"
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-background/10 text-background/70 transition-colors hover:bg-background/20 hover:text-background"
               >
                 <Facebook className="h-4 w-4" />
-              </a>
-              <a
-                href="https://lin.ee/QwupO6n"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="LINE Official Account"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-background/10 text-background/70 transition-colors hover:bg-background/20 hover:text-background"
-              >
-                <MessageCircle className="h-4 w-4" />
               </a>
               <Link
                 to="/admin/login"

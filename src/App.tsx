@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import NewsPage from "./pages/NewsPage";
 import NewsDetail from "./pages/NewsDetail";
 import AboutPage from "./pages/AboutPage";
+import CommitteePage from "./pages/CommitteePage";
 import MembershipPage from "./pages/MembershipPage";
 import HallOfFamePage from "./pages/HallOfFamePage";
 import PublicationsPage from "./pages/PublicationsPage";
@@ -39,6 +40,7 @@ const App = () => (
               <Route path="/news" element={<NewsPage />} />
               <Route path="/news/:id" element={<NewsDetail />} />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/committee" element={<CommitteePage />} />
               <Route path="/membership" element={<MembershipPage />} />
               <Route path="/hall-of-fame" element={<HallOfFamePage />} />
               <Route path="/publications" element={<PublicationsPage />} />

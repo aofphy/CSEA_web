@@ -14,7 +14,7 @@ import {
 const navItems = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Committee", href: "/#committee" },
+  { label: "Committee", href: "/committee" },
   {
     label: "Conferences",
     href: "#conferences",
@@ -107,7 +107,9 @@ export function Header() {
 
         {/* CTA Button */}
         <div className="hidden lg:block">
-          <Button>Join Us</Button>
+          <Button asChild>
+            <Link to="/membership">Join Us</Link>
+          </Button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -151,7 +153,9 @@ export function Header() {
                 </li>
               ))}
               <li className="pt-2">
-                <Button className="w-full">Join Us</Button>
+                <Button className="w-full" asChild>
+                  <Link to="/membership" onClick={() => setMobileMenuOpen(false)}>Join Us</Link>
+                </Button>
               </li>
             </ul>
           </nav>

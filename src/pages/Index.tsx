@@ -8,7 +8,6 @@ import { MembersSection } from "@/components/MembersSection";
 import { PartnersSection } from "@/components/PartnersSection";
 import { HallOfFameSection } from "@/components/HallOfFameSection";
 import { PublicationsSection } from "@/components/PublicationsSection";
-import { CommitteeSection } from "@/components/CommitteeSection";
 import { Footer } from "@/components/Footer";
 import { GalleryMarquee } from "@/components/GalleryMarquee";
 
@@ -22,7 +21,7 @@ const Index = () => {
         <NewsSection />
         {/* AboutSection moved to /about */}
         <ActivitiesSection />
-        <CommitteeSection />
+        {/* CommitteeSection moved to /committee */}
         <PartnersSection />
         {/* MembershipBenefits moved to /membership */}
         {/* <MembersSection /> - Hiding redundant members section since we have committee section now */}
