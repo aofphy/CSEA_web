@@ -1,4 +1,4 @@
-import { CheckCircle2, FileText, Users, Award, Download } from "lucide-react";
+import { CheckCircle2, FileText, Users, Award, Download, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -144,9 +144,13 @@ export function MembershipBenefits() {
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center border-t pt-8">
             <Button size="lg" variant="default" className="gap-2 shadow-md w-full sm:w-auto" asChild>
-              <a href="/docs/CSEA-APPL-2023.doc" download>
-                <Download className="w-4 h-4" />
-                ใบสมัครสมาชิก (DOC)
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSctcc4clKVyPDk6huTunAR5n6YoqiyGSE3NmjJY6m0pBaufgg/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ExternalLink className="w-4 h-4" />
+                สมัครสมาชิก (Google Form)
               </a>
             </Button>
             <Button size="lg" variant="outline" className="gap-2 shadow-sm w-full sm:w-auto" asChild>

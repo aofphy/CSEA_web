@@ -12,6 +12,7 @@ import AboutPage from "./pages/AboutPage";
 import MembershipPage from "./pages/MembershipPage";
 import HallOfFamePage from "./pages/HallOfFamePage";
 import PublicationsPage from "./pages/PublicationsPage";
+import AnscseHistoryPage from "./pages/AnscseHistoryPage";
 import NotFound from "./pages/NotFound";
 import { AdminLayout } from "./components/admin/AdminLayout";
 import AdminLogin from "./pages/admin/Login";
@@ -41,6 +42,7 @@ const App = () => (
               <Route path="/membership" element={<MembershipPage />} />
               <Route path="/hall-of-fame" element={<HallOfFamePage />} />
               <Route path="/publications" element={<PublicationsPage />} />
+              <Route path="/anscse-history" element={<AnscseHistoryPage />} />
               
               {/* Admin Routes */}
               <Route path="/admin/login" element={<AdminLogin />} />

@@ -54,6 +54,9 @@ alter table public.publications enable row level security;
 -- Policies for News
 drop policy if exists "Public Read News" on public.news;
 drop policy if exists "Admin Write News" on public.news;
+drop policy if exists "Admin Insert News" on public.news;
+drop policy if exists "Admin Update News" on public.news;
+drop policy if exists "Admin Delete News" on public.news;
 -- Remove old policies if any
 drop policy if exists "Enable read access for all users" on public.news;
 drop policy if exists "Enable insert for authenticated users only" on public.news;
@@ -61,11 +64,16 @@ drop policy if exists "Enable update for authenticated users only" on public.new
 drop policy if exists "Enable delete for authenticated users only" on public.news;
 
 create policy "Public Read News" on public.news for select using (true);
-create policy "Admin Write News" on public.news for all to authenticated using (true);
+create policy "Admin Insert News" on public.news for insert to authenticated with check (((select auth.jwt()) ->> 'email') = 'admin@csea.or.th');
+create policy "Admin Update News" on public.news for update to authenticated using (((select auth.jwt()) ->> 'email') = 'admin@csea.or.th');
+create policy "Admin Delete News" on public.news for delete to authenticated using (((select auth.jwt()) ->> 'email') = 'admin@csea.or.th');
 
 -- Policies for Hall of Fame
 drop policy if exists "Public Read HallOfFame" on public.hall_of_fame;
 drop policy if exists "Admin Write HallOfFame" on public.hall_of_fame;
+drop policy if exists "Admin Insert HallOfFame" on public.hall_of_fame;
+drop policy if exists "Admin Update HallOfFame" on public.hall_of_fame;
+drop policy if exists "Admin Delete HallOfFame" on public.hall_of_fame;
 
 drop policy if exists "Enable read access for all users" on public.hall_of_fame;
 drop policy if exists "Enable insert for authenticated users only" on public.hall_of_fame;
@@ -73,11 +81,16 @@ drop policy if exists "Enable update for authenticated users only" on public.hal
 drop policy if exists "Enable delete for authenticated users only" on public.hall_of_fame;
 
 create policy "Public Read HallOfFame" on public.hall_of_fame for select using (true);
-create policy "Admin Write HallOfFame" on public.hall_of_fame for all to authenticated using (true);
+create policy "Admin Insert HallOfFame" on public.hall_of_fame for insert to authenticated with check (((select auth.jwt()) ->> 'email') = 'admin@csea.or.th');
+create policy "Admin Update HallOfFame" on public.hall_of_fame for update to authenticated using (((select auth.jwt()) ->> 'email') = 'admin@csea.or.th');
+create policy "Admin Delete HallOfFame" on public.hall_of_fame for delete to authenticated using (((select auth.jwt()) ->> 'email') = 'admin@csea.or.th');
 
 -- Policies for Publications
 drop policy if exists "Public Read Publications" on public.publications;
 drop policy if exists "Admin Write Publications" on public.publications;
+drop policy if exists "Admin Insert Publications" on public.publications;
+drop policy if exists "Admin Update Publications" on public.publications;
+drop policy if exists "Admin Delete Publications" on public.publications;
 
 drop policy if exists "Enable read access for all users" on public.publications;
 drop policy if exists "Enable insert for authenticated users only" on public.publications;
@@ -85,4 +98,6 @@ drop policy if exists "Enable update for authenticated users only" on public.pub
 drop policy if exists "Enable delete for authenticated users only" on public.publications;
 
 create policy "Public Read Publications" on public.publications for select using (true);
-create policy "Admin Write Publications" on public.publications for all to authenticated using (true);
+create policy "Admin Insert Publications" on public.publications for insert to authenticated with check (((select auth.jwt()) ->> 'email') = 'admin@csea.or.th');
+create policy "Admin Update Publications" on public.publications for update to authenticated using (((select auth.jwt()) ->> 'email') = 'admin@csea.or.th');
+create policy "Admin Delete Publications" on public.publications for delete to authenticated using (((select auth.jwt()) ->> 'email') = 'admin@csea.or.th');

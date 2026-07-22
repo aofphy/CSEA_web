@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Facebook, Globe, Lock } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, Globe, Lock, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function Footer() {
@@ -63,8 +63,15 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-background/70" />
                 <span className="text-background/70">
-                  สมาคมวิทยาการคำนวณและวิศวกรรมศาสตร์แห่งประเทศไทย
+                  ศูนย์เทคโนโลยีอิเล็กทรอนิกส์และคอมพิวเตอร์แห่งชาติ 112 อุทยานวิทยาศาสตร์ประเทศไทย
+                  หมู่ที่ 9 ตำบลคลองหนึ่ง อำเภอคลองหลวง จังหวัดปทุมธานี 12120
                 </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="h-4 w-4 text-background/70" />
+                <a href="tel:+6625646900" className="text-background/70 transition-colors hover:text-background">
+                  02-564-6900 ต่อ 2629
+                </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-background/70" />
@@ -87,6 +94,15 @@ export function Footer() {
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-background/10 text-background/70 transition-colors hover:bg-background/20 hover:text-background"
               >
                 <Facebook className="h-4 w-4" />
+              </a>
+              <a
+                href="https://lin.ee/QwupO6n"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="LINE Official Account"
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-background/10 text-background/70 transition-colors hover:bg-background/20 hover:text-background"
+              >
+                <MessageCircle className="h-4 w-4" />
               </a>
               <Link
                 to="/admin/login"

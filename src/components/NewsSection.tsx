@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CalendarDays, ArrowRight } from "lucide-react";
+import { CalendarDays, ArrowRight, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useData } from "@/context/DataContext";
@@ -21,6 +21,31 @@ export function NewsSection() {
           <p className="mx-auto max-w-2xl text-muted-foreground">
             ติดตามข่าวสารล่าสุด การประชุมวิชาการ และกิจกรรมต่างๆ ของสมาคม
           </p>
+        </div>
+
+        <div className="mb-12 flex flex-col sm:flex-row items-center gap-6 rounded-2xl border bg-background p-6 shadow-sm max-w-3xl mx-auto">
+          <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=https%3A%2F%2Flin.ee%2FQwupO6n"
+            alt="QR Code เพิ่มเพื่อน LINE Official CSEA Thailand"
+            className="h-28 w-28 shrink-0 rounded-lg border"
+            width={140}
+            height={140}
+          />
+          <div className="flex-1 text-center sm:text-left">
+            <p className="flex items-center justify-center sm:justify-start gap-2 font-semibold text-foreground">
+              <MessageCircle className="h-5 w-5 text-primary" />
+              พบกับข่าวสารล่าสุดทาง LINE! เฉพาะสมาชิก LINE OFFICIAL เท่านั้น
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              เพิ่มบัญชีทางการ CSEA Thailand เป็นเพื่อนผ่านลิงก์หรือสแกน QR Code
+            </p>
+          </div>
+          <Button className="gap-2 shrink-0" asChild>
+            <a href="https://lin.ee/QwupO6n" target="_blank" rel="noopener noreferrer">
+              <MessageCircle className="h-4 w-4" />
+              เพิ่มเพื่อน LINE
+            </a>
+          </Button>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
