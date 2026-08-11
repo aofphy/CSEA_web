@@ -31,7 +31,7 @@ export default function NewsPage() {
                   )}
                 <CardHeader className="pb-3 flex-shrink-0">
                   <div className="mb-2 flex items-center justify-between">
-                    <Badge variant={item.category === "Conference" ? "default" : "secondary"} className="text-xs">
+                    <Badge variant={["Conference", "Research News"].includes(item.category) ? "default" : "secondary"} className="text-xs">
                       {item.category}
                     </Badge>
                     {item.isNew && (

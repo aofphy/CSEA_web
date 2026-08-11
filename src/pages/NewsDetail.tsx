@@ -39,7 +39,7 @@ export default function NewsDetail() {
           )}
           
           <div className="flex items-center gap-4 mb-4 not-prose">
-             <Badge variant={newsItem.category === "Conference" ? "default" : "secondary"}>
+             <Badge variant={["Conference", "Research News"].includes(newsItem.category) ? "default" : "secondary"}>
                 {newsItem.category}
              </Badge>
              <div className="flex items-center gap-2 text-muted-foreground text-sm">

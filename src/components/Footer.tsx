@@ -70,7 +70,7 @@ export function Footer() {
               <li className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-background/70" />
                 <a href="tel:+6625646900" className="text-background/70 transition-colors hover:text-background">
-                  02-564-6900 ต่อ 2629
+                  02-564-6900 ต่อ 2604
                 </a>
               </li>
             </ul>

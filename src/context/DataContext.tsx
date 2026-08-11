@@ -124,6 +124,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       description: item.description,
       date: item.date,
       category: item.category,
+      image: item.image,
       is_new: item.isNew
     }]);
 
@@ -141,6 +142,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       description: item.description,
       date: item.date,
       category: item.category,
+      image: item.image,
       is_new: item.isNew
     }).eq('id', item.id);
 
