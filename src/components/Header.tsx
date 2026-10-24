@@ -22,7 +22,7 @@ const navItems = [
       { label: "ANSCSE", href: "https://www.facebook.com/ANSCSE" },
       { label: "ANSCSE History (1-26)", href: "/anscse-history" },
       { label: "Thai summer School in Computational", href: "https://www.facebook.com/profile.php?id=61565925853669" },
-      { label: "ANSCSE27", href: "/#anscse27" },
+      { label: "ANSCSE27", href: "https://anscse27.com/" },
       { label: "ANSCSE26", href: "/#anscse26" },
       { label: "TS2C2", href: "/#ts2c2" },
     ],
