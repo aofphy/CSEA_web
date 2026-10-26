@@ -142,11 +142,11 @@ export function CommitteeSection() {
                        <img
                          src={member.photo}
                          alt={member.name}
-                         className="h-10 w-10 shrink-0 rounded-full object-cover"
+                         className="h-[52px] w-[52px] shrink-0 rounded-full object-cover"
                        />
                      ) : (
-                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                          <UserCircle className="h-6 w-6 text-primary" />
+                       <div className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-primary/10">
+                          <UserCircle className="h-8 w-8 text-primary" />
                        </div>
                      )}
                      <div>
