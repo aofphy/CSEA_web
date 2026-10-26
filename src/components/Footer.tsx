@@ -89,7 +89,9 @@ export function Footer() {
             {/* Social */}
             <div className="mt-4 flex gap-3">
               <a
-                href="#"
+                href="https://www.facebook.com/profile.php?id=61595668147681"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-background/10 text-background/70 transition-colors hover:bg-background/20 hover:text-background"
               >
                 <Facebook className="h-4 w-4" />

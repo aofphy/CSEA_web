@@ -15,14 +15,15 @@ const committeeMembers = [
     role: "vice-president"
   },
   {
-    name: "ผศ.ดร. ณัฐธพล ยอดศิลป์",
+    name: "ผศ.ดร. นัฐธพล ยอดศิลป์",
     position: "เลขานุการ",
     role: "secretary"
   },
   {
     name: "รศ.ดร. ธัญญาดา รุ่งโรจน์มงคล",
     position: "เหรัญญิก",
-    role: "treasurer"
+    role: "treasurer",
+    photo: "/committee/thanyada-rungrotmongkol.jpg"
   },
   {
     name: "อ.ดร. ทินกร แช่หลี",
@@ -42,7 +43,8 @@ const committeeMembers = [
   {
     name: "รศ.ดร. นาวี กังวาลย์",
     position: "ปฏิคม",
-    role: "receptionist"
+    role: "receptionist",
+    photo: "/committee/nawee-kungwan.jpg"
   },
   {
     name: "ดร. วุฒิไกร บูนยาพร",
@@ -52,7 +54,8 @@ const committeeMembers = [
   {
     name: "ศ.ดร. ภูมิ คำเอม",
     position: "กรรมการบริหารสมาคมฯ",
-    role: "member"
+    role: "member",
+    photo: "/committee/phum-khamem.jpg"
   },
   {
     name: "รศ.ดร. ศุภฤกษ์ ประเสริฐธรรม",
@@ -67,7 +70,8 @@ const committeeMembers = [
   {
     name: "ดร. สมบูรณ์ โอตรวรรณะ",
     position: "กรรมการบริหารสมาคมฯ",
-    role: "member"
+    role: "member",
+    photo: "/committee/somboon-otarawanna.jpg"
   },
   {
     name: "ดร. ยุทธนา วงษ์หนองหว้า",
@@ -122,9 +126,17 @@ export function CommitteeSection() {
                     key={index}
                     className="flex items-start gap-4 rounded-lg border p-4 hover:bg-muted/50 transition-colors"
                   >
-                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                        <UserCircle className="h-6 w-6 text-primary" />
-                     </div>
+                     {member.photo ? (
+                       <img
+                         src={member.photo}
+                         alt={member.name}
+                         className="h-10 w-10 shrink-0 rounded-full object-cover"
+                       />
+                     ) : (
+                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                          <UserCircle className="h-6 w-6 text-primary" />
+                       </div>
+                     )}
                      <div>
                         <h3 className="font-semibold text-foreground">{member.name}</h3>
                         <p className="text-sm text-muted-foreground font-medium text-primary/80 mt-1">

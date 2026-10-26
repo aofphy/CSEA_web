@@ -14,7 +14,7 @@ const individualMembers = [
     position: "อุปนายก",
   },
   {
-    name: "ผศ.ดร. ณัฐธพล ยอดศิลป์",
+    name: "ผศ.ดร. นัฐธพล ยอดศิลป์",
     position: "เลขานุการ",
   },
   {
