@@ -7,17 +7,20 @@ const committeeMembers = [
   {
     name: "ดร.สุภาวดี หาญเมืองรักษ์",
     position: "นายกสมาคมฯ",
-    role: "president"
+    role: "president",
+    photo: "/committee/supawadee-hanmuangrak.png"
   },
   {
     name: "รศ.ดร. สุวิทย์ สุธีรากุล",
     position: "อุปนายก",
-    role: "vice-president"
+    role: "vice-president",
+    photo: "/committee/suwit-suthirakun.png"
   },
   {
     name: "ผศ.ดร. นัฐธพล ยอดศิลป์",
     position: "เลขานุการ",
-    role: "secretary"
+    role: "secretary",
+    photo: "/committee/nattapon-yodsilp.png"
   },
   {
     name: "รศ.ดร. ธัญญาดา รุ่งโรจน์มงคล",
@@ -28,17 +31,20 @@ const committeeMembers = [
   {
     name: "อ.ดร. ทินกร แช่หลี",
     position: "นายทะเบียน",
-    role: "registrar"
+    role: "registrar",
+    photo: "/committee/tinnakorn-chaeli.png"
   },
   {
     name: "รศ.ดร. บุญเดช เบ็กฟ้า",
     position: "ประชาสัมพันธ์",
-    role: "pr"
+    role: "pr",
+    photo: "/committee/boondej-bekfa.png"
   },
   {
     name: "ผศ.ดร. อิทธิพล ฟองแก้ว",
     position: "ประชาสัมพันธ์",
-    role: "pr"
+    role: "pr",
+    photo: "/committee/itthipon-fongkaew.png"
   },
   {
     name: "รศ.ดร. นาวี กังวาลย์",
@@ -49,7 +55,8 @@ const committeeMembers = [
   {
     name: "ดร. วุฒิไกร บูนยาพร",
     position: "ปฏิคม",
-    role: "receptionist"
+    role: "receptionist",
+    photo: "/committee/wuttikrai-boonyaporn.jpg"
   },
   {
     name: "ศ.ดร. ภูมิ คำเอม",
@@ -60,12 +67,14 @@ const committeeMembers = [
   {
     name: "รศ.ดร. ศุภฤกษ์ ประเสริฐธรรม",
     position: "กรรมการบริหารสมาคมฯ",
-    role: "member"
+    role: "member",
+    photo: "/committee/supharerk-prasertthum.png"
   },
   {
     name: "ผศ.ดร. ศุภกิจ พฤกษอรุณ",
     position: "กรรมการบริหารสมาคมฯ",
-    role: "member"
+    role: "member",
+    photo: "/committee/supakit-pruksaroon.png"
   },
   {
     name: "ดร. สมบูรณ์ โอตรวรรณะ",
@@ -76,17 +85,20 @@ const committeeMembers = [
   {
     name: "ดร. ยุทธนา วงษ์หนองหว้า",
     position: "กรรมการบริหารสมาคมฯ",
-    role: "member"
+    role: "member",
+    photo: "/committee/yuttana-wongnonghwa.png"
   },
   {
     name: "รศ.ดร. ประภาศิริ พงษ์ประยูร",
     position: "กรรมการบริหารสมาคมฯ",
-    role: "member"
+    role: "member",
+    photo: "/committee/prapasiri-pongprayoon.png"
   },
   {
     name: "ผศ.ดร. มนัสวี สุทธิพงษ์",
     position: "กรรมการบริหารสมาคมฯ",
-    role: "member"
+    role: "member",
+    photo: "/committee/manasawee-sutthipong.png"
   },
 ];
 
